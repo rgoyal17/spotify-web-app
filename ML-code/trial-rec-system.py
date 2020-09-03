@@ -13,7 +13,7 @@ df.drop(['artists', 'explicit', 'id', 'popularity',
 
 # Reverse mapping index as seen in the example of the movie based recommender.
 # Issue 1: Reverse mapping doesn't work with chinese and such songs
-indices = pd.Series(df.index, index=df['name']).drop_duplicates() 
+indices = pd.Series(df.index, index=df['name']).drop_duplicates()
 
 # Vectorizing the whole CSV file.
 # Issue 2: It does not work properly. Might need to switch to clustering 
