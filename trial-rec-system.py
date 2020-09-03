@@ -1,4 +1,4 @@
-# 2 ISSUES. Try to find potential bugs in this and we can have a code review around this later.""
+# 2 ISSUES. Try to find potential bugs in this and we can have a code review around this later.
 
 import pandas as pd
 import numpy as np
