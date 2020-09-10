@@ -5,17 +5,17 @@ import pickle
 from scipy.spatial import distance
 from sklearn.preprocessing import StandardScaler
 
-# Loading all essential information for this recommender.
+# Loading all the essential information required by this recommender.
 data = (pd.read_csv("spotify-web-app\ML-code\KMeans code\KMeans_data\cleaned_feature_data.csv")).to_numpy()
 data_full = (pd.read_csv("spotify-web-app\ML-code\KMeans code\KMeans_data\cleaned_data.csv"))
 kmeans = pickle.load(open("spotify-web-app\ML-code\KMeans code\pickled_data\model.pkl", "rb"))
 scaler = pickle.load(open("spotify-web-app\ML-code\KMeans code\pickled_data\scaler.pkl", "rb"))
 
-# Song data used for recommendation. You can add/uncomment a particular song you want.
+# Song data used for recommendation. You can add/uncomment a particular song that you want.
 query = [0.0826, 0.575, 0.804, 0.000363, 0.0681, -3.933, 0.0626, 122.08, 0.399] # Flash Delirium by MGMT
 # query = [0.39, 0.853, 0.351, 9.38E-06, 0.752, -10.198, 0.241, 118.028, 0.282] # wish you were gay by Billie Eilish
 
-# standardizing the query song and getting it's cluster label.
+# standardizing the query song and getting its cluster label.
 query_std = scaler.transform([query])
 cluster_label = kmeans.predict(query_std)
 
@@ -42,5 +42,5 @@ def SongListGen(cluster_indexes, data_point):
         ret.append(data_full._get_value(i, "name") + " by " + data_full._get_value(i, "artists"))
     return ret
 
-# calling and printing our list of recommendations
+# printing our list of recommendations
 print(SongListGen(indexes, tuple(query_std)))
