@@ -10,6 +10,7 @@ data = (pd.read_csv("spotify-web-app\ML-code\KMeans code\KMeans_data\cleaned_fea
 data_full = (pd.read_csv("spotify-web-app\ML-code\KMeans code\KMeans_data\cleaned_data.csv"))
 kmeans = pickle.load(open("spotify-web-app\ML-code\KMeans code\pickled_data\model.pkl", "rb"))
 scaler = pickle.load(open("spotify-web-app\ML-code\KMeans code\pickled_data\scaler.pkl", "rb"))
+artists_by_genres = pickle.load(open("ML-code/KMeans code/pickled_data/artists_by_genre.pkl", "rb"))
 
 # Song data used for recommendation. You can add/uncomment a particular song that you want.
 query = [0.0826, 0.575, 0.804, 0.000363, 0.0681, -3.933, 0.0626, 122.08, 0.399] # Flash Delirium by MGMT
@@ -29,7 +30,7 @@ for index in range(len(labels)):
 # Returns a list of 5 songs recommended according to our model.
 # ISSUE: If song is contained within our dataset, the method reports the 
 # same song again.
-def SongListGen(cluster_indexes, data_point):
+def basic_rec(cluster_indexes, data_point):
     distances = {}
     for index in cluster_indexes:
         point = tuple(scaler.transform([data[index]]))
@@ -42,5 +43,20 @@ def SongListGen(cluster_indexes, data_point):
         ret.append(data_full._get_value(i, "name") + " by " + data_full._get_value(i, "artists"))
     return ret
 
+def genre_rec(artists_by_genres) {
+    pass
+}
+
+def artist_rec(artist) {
+    pass
+}
+
+def song_list_gen(cluster_indexes, data_point, artist, artists_by_genres):
+    ret = []
+    ret.append(artist_rec())
+    ret.append(genre_rec())
+    ret.append(basic_rec(cluster_indexes, data_point))
+    return ret
+
 # printing our list of recommendations
-print(SongListGen(indexes, tuple(query_std)))
+print(song_list_gen(indexes, tuple(query_std), 'Billie Eilish', artists_by_genres))
