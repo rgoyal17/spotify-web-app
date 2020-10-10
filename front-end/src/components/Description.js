@@ -9,8 +9,8 @@ class Description extends React.Component {
     this.state = {}
   }
 
-  handleOnClick = () => {
-    window.open("https://www.google.com", "_blank")
+  handleOnClick = (url) => {
+    window.open(url, "_blank")
     console.log("hi")
   }
 
@@ -19,27 +19,38 @@ class Description extends React.Component {
       <Container>
         <Row className="comp-spacing">
           <Col align='center'>
+            <h1>WHAT IS [OUR_NAME]?</h1>
+            [OUR_NAME] provides Spotify recommendations based on what <i>you want</i> to listen to. <br></br>
+            Heard a song so good that you want more? Try our similar song recommendation feature.
+            Maybe you don't know what you are in the mood for today? Try our quiz to get specific
+            recommendations based on your mood! 
+            You can also login through your Spotify account to get more personalized recommendations and
+            statistics about your listening pattern.
+          </Col>
+        </Row>
+        <Row className="comp-spacing">
+          <Col align='center'>
             <h1>OUR TEAM</h1>
           </Col>
         </Row>
         <Row className="comp-spacing">
           <Col align='center'>
-            <div onClick={() => this.handleOnClick()}>
                 <ReactRoundedImage 
                 image={require('../data/raul.jpg')}
                 imageWidth="150"
                 imageHeight="150"
                 roundedSize="0"
                 ></ReactRoundedImage>
-            </div>
           </Col>
           <Col align='center'>
+          <div >
             <ReactRoundedImage 
               image={require('../data/rishabh.jpeg')}
               imageWidth="150"
               imageHeight="150"
               roundedSize="0"
             ></ReactRoundedImage>
+          </div>
           </Col>
           <Col align='center'>
             <ReactRoundedImage 
@@ -54,20 +65,50 @@ class Description extends React.Component {
           <Col align='center'>
             Ritadhwaj Roy Choudhury<br></br>
             Developer<br></br>
-            Junior at the Paul G Allen School of Computer Science and Engineering. <br></br>
-            rroy21 [at] cs.washington [dot] edu
+            Junior at the Paul G Allen School of Computer Science and Engineering at University of Washington. <br></br>
+            rroy21 [at] uw [dot] edu <br></br>
+            <img 
+              src={require('../data/github-logo.png')} 
+              width='40' alt="github profile" 
+              onClick={() => this.handleOnClick("https://www.github.com/raulroy45")}
+            ></img>
+            <img
+              src={require('../data/linkedin-logo.png')} 
+              width='30' alt="linkedin profile" 
+              onClick={() => this.handleOnClick("https://www.linkedin.com/in/ritadhwaj-r-2054a1103//")}>
+            </img>
           </Col>
           <Col align='center'> 
             Rishabh Goyal<br></br>
             Developer<br></br>
-            Junior at the University of Washington, studying Computer Science.<br></br>
-            rgoyal17 [at] cs.washington [dot] edu
+            Junior at the Paul G Allen School of Computer Science and Engineering at University of Washington.<br></br>
+            rgoyal17 [at] uw [dot] edu <br></br>
+            <img 
+              src={require('../data/github-logo.png')} 
+              width='40' alt="github profile" 
+              onClick={() => this.handleOnClick("https://www.github.com/rgoyal17")}>
+            </img>
+            <img
+              src={require('../data/linkedin-logo.png')} 
+              width='30' alt="linkedin profile" 
+              onClick={() => this.handleOnClick("https://www.linkedin.com/in/rishabh-goyal-0917/")}>
+            </img>
           </Col>
           <Col align='center'>
             Atharv Wairagade<br></br>
             UI/UX<br></br>
-            Junior at the University of Washington, studying HCDE.<br></br>
-            athumadarchod [at] gmail [dot] com
+            Junior at the Human Centered Design and Engineering at University of Washington.<br></br>
+            atharvvw [at] uw [dot] edu <br></br>
+            <img
+              src={require('../data/website-logo.png')} 
+              width='40' alt="portfolio" 
+              onClick={() => this.handleOnClick("https://www.linkedin.com/in/atharvvw/")}>
+            </img>
+            <img
+              src={require('../data/linkedin-logo.png')} 
+              width='30' alt="linkedin profile" 
+              onClick={() => this.handleOnClick("https://www.linkedin.com/in/atharvvw/")}>
+            </img>
           </Col>
         </Row>
       </Container>
