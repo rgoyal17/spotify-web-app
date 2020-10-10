@@ -9,7 +9,7 @@ class Description extends React.Component {
     this.state = {}
   }
 
-  handleOnClick(url){
+  handleOnClick = () => {
     window.open("https://www.google.com", "_blank")
     console.log("hi")
   }
@@ -24,13 +24,14 @@ class Description extends React.Component {
         </Row>
         <Row className="comp-spacing">
           <Col align='center'>
-            <ReactRoundedImage 
-              image={require('../data/raul.jpg')}
-              imageWidth="150"
-              imageHeight="150"
-              roundedSize="0"
-              onClick={(e) => {this.handleOnClick("https://github.com", e)}}
-            ></ReactRoundedImage>
+            <div onClick={() => this.handleOnClick()}>
+                <ReactRoundedImage 
+                image={require('../data/raul.jpg')}
+                imageWidth="150"
+                imageHeight="150"
+                roundedSize="0"
+                ></ReactRoundedImage>
+            </div>
           </Col>
           <Col align='center'>
             <ReactRoundedImage 
@@ -60,7 +61,7 @@ class Description extends React.Component {
             Rishabh Goyal<br></br>
             Developer<br></br>
             Junior at the University of Washington, studying Computer Science.<br></br>
-            rgoyal [at] cs.washington [dot] edu
+            rgoyal17 [at] cs.washington [dot] edu
           </Col>
           <Col align='center'>
             Atharv Wairagade<br></br>
