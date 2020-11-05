@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Button } from 'reactstrap';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -9,7 +9,13 @@ class Navigation extends React.Component {
 
   render() {
     return (
-        <div>Navigation</div>
+        <div>
+            <div className="nav-buttons">
+                <Button className="nav-button" color="primary">Explore Music</Button>
+                <Button className="nav-button" color="primary">Log In</Button>
+                <Button className="nav-button" color="primary">Quiz</Button>
+            </div>
+        </div>
     );
   }
 }

@@ -13,3 +13,26 @@ code {
 }
 
 .comp-spacing{margin-bottom: 10px;}
+
+/* Navigation */
+.nav-buttons {
+    text-align: center;
+}
+
+.nav-buttons .nav-button {
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    border-color: black;
+    color: black;
+    margin: 0.2px;
+}
+
+.nav-buttons .nav-button:hover {
+    width: 200px;
+    height: 200px;
+    background-color: white;
+    border-color: black;
+    color: black;
+    margin: 0.2px;
+}
