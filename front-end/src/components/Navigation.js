@@ -13,7 +13,7 @@ class Navigation extends React.Component {
         <div>
             <div className="nav-buttons">
                 <Link to="/explore"><Button className="nav-button" color="primary">Explore Music</Button></Link>
-                <Link to="/"><Button className="nav-button" color="primary">Log In</Button></Link>
+                <a href="http://localhost:8888/login"><Button className="nav-button" color="primary">Log In</Button></a>
                 <Link to="/quiz"><Button className="nav-button" color="primary">Quiz</Button></Link>
             </div>
         </div>
