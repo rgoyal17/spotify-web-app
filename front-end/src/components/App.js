@@ -1,6 +1,8 @@
 import React from 'react';
-import Navigation from './Navigation'
-import Description from './Description'
+import { Route, Switch, Redirect } from 'react-router-dom';
+import HomePage from './HomePage';
+import ExplorePage from './ExplorePage'
+import QuizPage from './QuizPage'
 
 class App extends React.Component {
   constructor(props) {
@@ -11,14 +13,13 @@ class App extends React.Component {
   render() {
     return (
         <div>
-            <div>
-                <Navigation></Navigation>
-            </div>
-            <div>
-                <Description></Description>
-            </div>
+            <Switch>
+              <Route exact path='/' render={(props) => <HomePage {...props} />} />
+              <Route path='/explore' render={(props) => <ExplorePage {...props} />} />
+              <Route path='/quiz' render={(props) => <QuizPage {...props} />} />
+              <Redirect to='/' />
+            </Switch>
         </div>
-        
     );
   }
 }

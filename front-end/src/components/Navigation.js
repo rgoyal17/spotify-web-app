@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class Navigation extends React.Component {
   constructor(props) {
@@ -11,9 +12,9 @@ class Navigation extends React.Component {
     return (
         <div>
             <div className="nav-buttons">
-                <Button className="nav-button" color="primary">Explore Music</Button>
-                <Button className="nav-button" color="primary">Log In</Button>
-                <Button className="nav-button" color="primary">Quiz</Button>
+                <Link to="/explore"><Button className="nav-button" color="primary">Explore Music</Button></Link>
+                <Link to="/"><Button className="nav-button" color="primary">Log In</Button></Link>
+                <Link to="/quiz"><Button className="nav-button" color="primary">Quiz</Button></Link>
             </div>
         </div>
     );
