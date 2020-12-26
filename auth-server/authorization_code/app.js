@@ -37,8 +37,8 @@ var stateKey = 'spotify_auth_state';
 var app = express();
 
 app.use(express.static(__dirname + '/public'))
-    .use(cors())
-    .use(cookieParser());
+   .use(cors())
+   .use(cookieParser());
 
 app.get('/login', function(req, res) {
 
@@ -46,15 +46,15 @@ app.get('/login', function(req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'ugc-image-upload user-read-playback-state user-modify-playback-state user-read-currently-playing streaming app-remote-control user-read-email user-read-private playlist-read-collaborative playlist-modify-public playlist-read-private playlist-modify-private user-library-modify user-library-read user-top-read user-read-playback-position user-read-recently-played user-follow-read user-follow-modify';
+  var scope = 'user-read-private user-read-email';
   res.redirect('https://accounts.spotify.com/authorize?' +
-      querystring.stringify({
-        response_type: 'code',
-        client_id: client_id,
-        scope: scope,
-        redirect_uri: redirect_uri,
-        state: state
-      }));
+    querystring.stringify({
+      response_type: 'code',
+      client_id: client_id,
+      scope: scope,
+      redirect_uri: redirect_uri,
+      state: state
+    }));
 });
 
 app.get('/callback', function(req, res) {
@@ -68,9 +68,9 @@ app.get('/callback', function(req, res) {
 
   if (state === null || state !== storedState) {
     res.redirect('/#' +
-        querystring.stringify({
-          error: 'state_mismatch'
-        }));
+      querystring.stringify({
+        error: 'state_mismatch'
+      }));
   } else {
     res.clearCookie(stateKey);
     var authOptions = {
@@ -91,6 +91,7 @@ app.get('/callback', function(req, res) {
 
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
+        console.log(access_token);
 
         var options = {
           url: 'https://api.spotify.com/v1/me',
@@ -104,16 +105,16 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
-            querystring.stringify({
-              access_token: access_token,
-              refresh_token: refresh_token
-            }));
+        res.redirect('/#' +
+          querystring.stringify({
+            access_token: access_token,
+            refresh_token: refresh_token
+          }));
       } else {
         res.redirect('/#' +
-            querystring.stringify({
-              error: 'invalid_token'
-            }));
+          querystring.stringify({
+            error: 'invalid_token'
+          }));
       }
     });
   }

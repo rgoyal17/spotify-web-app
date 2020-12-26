@@ -14,7 +14,7 @@ class App extends React.Component {
     return (
         <div>
             <Switch>
-              <Route exact path='/' render={(props) => <HomePage {...props} />} />
+              <Route exact path='/' render={(props) => <HomePage {...props} loggedIn={this.state.loggedIn} />} />
               <Route path='/explore' render={(props) => <ExplorePage {...props} />} />
               <Route path='/quiz' render={(props) => <QuizPage {...props} />} />
               <Redirect to='/' />

@@ -12,10 +12,10 @@ class HomePage extends React.Component {
     return (
         <div>
             <div>
-                <Navigation></Navigation>
+                <Navigation loggedIn={this.props.loggedIn} />
             </div>
             <div>
-                <Description></Description>
+                <Description />
             </div>
         </div>
     );

@@ -8,14 +8,19 @@ class Navigation extends React.Component {
     this.state = {}
   }
 
+  loginToggle = () => {
+    const url = this.props.loggedIn ? "https://www.spotify.com/logout" : "http://localhost:8888/login"
+    window.open(url, "_self")
+  }
+
   render() {
     return (
         <div>
-            <div className="nav-buttons">
-                <Link to="/explore"><Button className="nav-button" color="primary">Explore Music</Button></Link>
-                <a href="http://localhost:8888/login"><Button className="nav-button" color="primary">Log In</Button></a>
-                <Link to="/quiz"><Button className="nav-button" color="primary">Quiz</Button></Link>
-            </div>
+          <div className="nav-buttons">
+            <Link to="/explore"><Button className="nav-button" color="primary">Explore Music</Button></Link>
+            <Button type="submit" onClick={this.loginToggle} className="nav-button" color="primary">{this.props.loggedIn ? "Log Out" : "Log In"}</Button>
+            <Link to="/quiz"><Button className="nav-button" color="primary">Quiz</Button></Link>
+          </div>
         </div>
     );
   }

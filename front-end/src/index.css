@@ -1,5 +1,5 @@
-body {
-  margin: 0;
+.page-body {
+  margin: 10px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -35,4 +35,26 @@ code {
     border-color: black;
     color: black;
     margin: 0.2px;
+}
+
+form {
+  display: inline;
+}
+
+/* Explore Page */
+.explore-heading {
+  text-align: center;
+}
+
+.search-bar {
+  margin: 2% 10% 0% 10%;
+}
+
+.home-icon {
+  text-align: right;
+  margin: 1% 1% 0% 0%;
+}
+
+.fas {
+  color: black;
 }
