@@ -3,6 +3,10 @@ import numpy as np
 import pickle
 from scipy.spatial import distance
 from sklearn.preprocessing import StandardScaler
+from flask import Flask
+
+app = Flask(__name__)
+@app.route('/recommend')
 
 class SpotifyRecommender:
     def __init__(self):
@@ -90,3 +94,4 @@ class SpotifyRecommender:
             point = tuple(self.scaler.transform([_df[index]]))
             distances[index] = distance.euclidean(point, tuple(data_point))
         return (sorted(distances.items(), key=lambda x: x[1]))[:output_num]
+
