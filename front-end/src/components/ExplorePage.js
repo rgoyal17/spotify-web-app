@@ -8,15 +8,25 @@ class ExplorePage extends React.Component {
     this.state = {}
   }
 
+  searchChange = () => {
+    this.props.spotifyApi.setAccessToken(this.props.token)
+    this.props.spotifyApi.searchTracks('Love')
+    .then(function(data) {
+      console.log('Search by "Love"', data.body);
+    }, function(err) {
+      console.error(err);
+    });
+  }
+
   render() {
     return (
         <div>
           <div className="home-icon">
-            <Link to="/"><i class="fas fa-home fa-3x"></i></Link>
+            <Link to="/"><i className="fas fa-home fa-3x"></i></Link>
           </div>
           <h1 className="explore-heading">Explore Music</h1>
           <div className="search-bar">
-            <input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+            <input className="form-control" type="text" placeholder="Search" aria-label="Search" onChange={this.searchChange} />
           </div>
           <Container>
 
