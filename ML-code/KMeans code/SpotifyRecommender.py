@@ -1,19 +1,38 @@
+# Written by Ritadhwaj Roy Choudhury (rroy21@uw.edu) incollaboration with 
+# Rishabh Goyal (rgoyal17@uw.edu).
+
+# SpotifyRecommender is a class built upon Preprocessing.py and uses music data
+# from the Spotify API to recommend similar songs to the one provided using 
+# song data and machine learning algorithms.
+
+# A few things to note before using this class are - 
+# (1) SpotifyQuery: A SpotifyQuery is an array which carries all the necessary
+#                   data required to run the recommendation algorithm. The 
+#                   SpotifyQuery contains the song's following values 
+#                   (IN THE SPECIFIED ORDER):
+#
+#               [acousticness,danceability,energy,instrumentalness,
+#                  liveness,loudness,speechiness,tempo,valence]
+#                   
+# (2) Data used:    Numerous csv files are used to get all the required information.
+#                   These are as follows:
+#                   (1) ...
+# TODO: (3) API calls:
+
+
 import pandas as pd
 import numpy as np
 import pickle
 from scipy.spatial import distance
 from sklearn.preprocessing import StandardScaler
-from flask import Flask
 
-app = Flask(__name__)
-@app.route('/recommend')
 
 class SpotifyRecommender:
     def __init__(self):
         self.df_artists_songs = (pd.read_csv("ML-code/KMeans code/KMeans_data/cleaned_feature_data.csv"))
-        self.df = (self.df_artist_songs.drop(['artists'], axis=1)).to_numpy()
+        self.df = (self.df_artists_songs.drop(['artists'], axis=1)).to_numpy()
 
-        # can remove this after adjusting according to the specific API calls.
+        # TODO: remove this after adjusting according to the specific API calls 
         self.data_full = (pd.read_csv("ML-code/KMeans code/KMeans_data/cleaned_data.csv"))
 
         self.df_artists_attributes = pd.read_csv("ML-code/KMeans code/KMeans_data/cleaned_genre_data.csv")
@@ -22,19 +41,27 @@ class SpotifyRecommender:
         self.scaler = pickle.load(open("ML-code/KMeans code/pickled_data/scaler.pkl", "rb"))
         self.artist_genres = pickle.load(open("ML-code/KMeans code/pickled_data/artists_by_genre.pkl", "rb"))
     
+    # The method which will recommend songs based on artists and Spotify's song
+    # quantification.
+    # artist_name:  Name of the artist.
+    # spotifyQuery: the SpotifyQuery for the song through which more songs
+    #               will be recommended.
     def recommend(self, artist_name, spotifyQuery):
-        # Preparing all recommendations.
         recommend_list = []
+        # Artist-based recommendation.
         recommend_list.extend(self.__artist_rec(artist_name, spotifyQuery))
+        # Genre-based recommendation.
         recommend_list.extend(self.__genre_rec(artist_name))
+        # Machine-learning algorithm based recommendation.
         recommend_list.extend(self.__ML_rec(spotifyQuery))
         
-        # Returning printable values (CHANGE THIS ACCORDING TO YOUR API NEEDS)
+        # Returning print values.
+        # TODO: CHANGE THIS ACCORDING TO YOUR API NEEDS.
         ret = []
         for index in range(len(recommend_list)):
             i = (recommend_list[index])[0]
-            ret.append(data_full._get_value(i, "name") + " by " +\
-                       data_full._get_value(i, "artists"))
+            ret.append(self.data_full._get_value(i, "name") + " by " +\
+                       self.data_full._get_value(i, "artists"))
         return ret
 
     # TODO: Make /cleaned_artist.csv to get artist_attributes
@@ -50,8 +77,8 @@ class SpotifyRecommender:
             for other_artist in genre_list:
                 if not other_artist in common_artists:
                     common_artists[other_artist] = 1
-            else:
-                common_artists[other_artist] += 1
+                else:
+                    common_artists[other_artist] += 1
         sorted_list = sorted(common_artists.keys(), key=lambda x: x[1])
 
         # Only using the most common artists.
@@ -86,8 +113,8 @@ class SpotifyRecommender:
         
         return self.__euclidean_min(self.df, query_std, indexes)
 
-    # Calculating normal euclidean distance between desired mutli-dimensional points and returning
-    # only the closest desired number of points.
+    # Calculating normal euclidean distance between desired mutli-dimensional
+    # points and returning only the closest desired number of points.
     def __euclidean_min(self, _df, data_point, indexes, output_num=5):
         distances = {}
         for index in indexes:
