@@ -7,6 +7,8 @@ CORS(app)
 
 @app.route('/recommend')
 def get_recommendation():
+    songId = request.args.get('songId')
+    # use this songId to give song recommendations
     return {'recommend': 'Hello World'}
 
 client_id = 'f2d6728148db4fdaae6137fb108b8724'
