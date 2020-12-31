@@ -19,8 +19,9 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    spotifyApi.setAccessToken(this.sendRequest());
+  async componentDidMount() {
+    let token = await this.sendRequest()
+    spotifyApi.setAccessToken(token);
   }
 
   async sendRequest() {
@@ -49,7 +50,7 @@ class App extends React.Component {
         <div>
             <Switch>
               <Route exact path='/' render={(props) => <HomePage {...props} token={this.state.token} loginCallback={this.loginCallback} />} />
-              <Route path='/explore' render={(props) => <ExplorePage {...props} token={this.state.token} spotifyApi={spotifyApi} />} />
+              <Route path='/explore' render={(props) => <ExplorePage {...props} spotifyApi={spotifyApi} />} />
               <Route path='/quiz' render={(props) => <QuizPage {...props} />} />
               <Redirect to='/' />
             </Switch>
