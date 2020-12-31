@@ -25,6 +25,28 @@ class ExplorePage extends React.Component {
     this.wrapperRef = node;
   }
 
+  handleClickOutside = (event) => {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      if (this.state.showDisplay) {
+        this.setState({showDisplay: false})
+      }
+    }
+  }
+
+  async selectSong(songId) {
+    try {
+        let response = await fetch("http://127.0.0.1:5000/recommend?songId=" + songId);
+        if (!response.ok) {
+            alert("Error in fetching song recommendations!");
+            return;
+        }
+        let parsed = await response.json();
+        console.log(parsed)
+    } catch (e) {
+        alert(e);
+    }
+  }
+
   searchChange = (event) => {
     event.preventDefault()
     if (!this.state.showDisplay) {
@@ -39,17 +61,9 @@ class ExplorePage extends React.Component {
     });
   }
 
-  handleClickOutside = (event) => {
-    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-      if (this.state.showDisplay) {
-        this.setState({showDisplay: false})
-      }
-    }
-  }
-
   render() {
     let options = this.state.serachResults.map((song) => {
-      return <div id={song.id} key={song.id} className="song-results"> <img src={song.album.images[0].url} alt={song.name} height="45px" width="45px" /> {song.name} - {song.artists[0].name}</div>
+      return <div id={song.id} key={song.id} className="song-results" onClick={() => this.selectSong(song.id)}><img src={song.album.images[0].url} alt={song.name} height="50px" width="50px" /> {song.name} - {song.artists[0].name}</div>
     })
 
     return (
@@ -58,9 +72,11 @@ class ExplorePage extends React.Component {
             <Link to="/"><i className="fas fa-home fa-3x"></i></Link>
           </div>
           <h1 className="explore-heading">Explore Music</h1>
-          <input className="form-control" type="text" placeholder="Search" onChange={(event) => this.searchChange(event)} />
-          <div ref={this.wrapperRef} style={{display: this.state.showDisplay ? "block" : "none"}}>
-            {options}
+          <div id="song-search">
+            <input className="form-control" id="search-bar" type="text" placeholder="Search" onChange={(event) => this.searchChange(event)} />
+            <div ref={this.wrapperRef} style={{display: this.state.showDisplay ? "block" : "none"}}>
+              {options}
+            </div>
           </div>
         </div>
     );
