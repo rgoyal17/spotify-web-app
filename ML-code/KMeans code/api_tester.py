@@ -8,8 +8,19 @@ CORS(app)
 @app.route('/recommend')
 def get_recommendation():
     songId = request.args.get('songId')
+    acousticness = request.args.get('acousticness')
+    danceability = request.args.get('danceability')
+    energy = request.args.get('energy')
+    instrumentalness = request.args.get('instrumentalness')
+    liveness = request.args.get('liveness')
+    loudness = request.args.get('loudness')
+    speechiness = request.args.get('speechiness')
+    tempo = request.args.get('tempo')
+    valence = request.args.get('valence')
     # use this songId to give song recommendations
-    return {'recommend': 'Hello World'}
+    return {'songId': songId, 'acousticness': acousticness, 'danceability': danceability, 'energy': energy,
+    'instrumentalness': instrumentalness, 'liveness': liveness, 'loudness': loudness, 'speechiness': speechiness,
+    'tempo': tempo, 'valence': valence}
 
 client_id = 'f2d6728148db4fdaae6137fb108b8724'
 client_secret = 'a8fecbb751c94c5a953e852504101688'

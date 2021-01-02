@@ -35,13 +35,25 @@ class ExplorePage extends React.Component {
 
   async selectSong(songId) {
     try {
-        let response = await fetch("http://127.0.0.1:5000/recommend?songId=" + songId);
+      this.props.spotifyApi.getAudioFeaturesForTrack(songId)
+      .then(async (data) => {
+        console.log(data)
+        let response = await fetch("http://127.0.0.1:5000/recommend?songId=" + songId
+          + "&acousticness=" + data.body.acousticness + "&danceability=" + data.body.danceability
+          + "&energy=" + data.body.energy + "&instrumentalness=" + data.body.instrumentalness
+          + "&liveness=" + data.body.liveness + "&loudness=" + data.body.loudness
+          + "&speechiness=" + data.body.speechiness + "&tempo=" + data.body.tempo
+          + "&valence=" + data.body.valence);
         if (!response.ok) {
             alert("Error in fetching song recommendations!");
             return;
         }
         let parsed = await response.json();
         console.log(parsed)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     } catch (e) {
         alert(e);
     }
