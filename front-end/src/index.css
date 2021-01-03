@@ -37,16 +37,13 @@ code {
     margin: 0.2px;
 }
 
-form {
-  display: inline;
-}
-
 /* Explore Page */
 .explore-heading {
   text-align: center;
+  margin-bottom: 2%;
 }
 
-.search-bar {
+.search {
   margin: 2% 10% 0% 10%;
 }
 
@@ -57,4 +54,26 @@ form {
 
 .fas {
   color: black;
+}
+
+.song-results {
+  padding: 1%;
+  border-bottom: solid 1px #eee;
+  display: inline-block;
+  width: 75%;
+  text-align: left;
+}
+
+.song-results:hover {
+  cursor: pointer;
+  background-color: #eee;
+}
+
+#song-search {
+  text-align: center;
+}
+
+#search-bar {
+  display: inline-block;
+  width: 75%;
 }
