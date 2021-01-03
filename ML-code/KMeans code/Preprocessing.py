@@ -1,4 +1,5 @@
 # Preprocesses all the necessary data required.
+import ast
 import pickle
 import pandas as pd
 import numpy as np
@@ -47,7 +48,7 @@ with open('ML-code/Data/data_w_genres.csv', 'r') as read_obj1:
         for index in range(1, 11):
             if index == 3:
                 continue
-            artist_attributes.append(row[index])
+            artist_attributes.append(ast.literal_eval(row[index]))
         artist = (row[0], artist_attributes)
         genres = literal_eval(row[15])
         for genre in genres:
