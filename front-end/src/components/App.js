@@ -15,41 +15,56 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token : ''
+      app_token : '',
+      user_token: ''
     }
   }
 
   async componentDidMount() {
-    let token = await this.sendRequest()
-    spotifyApi.setAccessToken(token);
+    this.sendRequest()
   }
 
   async sendRequest() {
     try {
-        let response = await fetch("http://127.0.0.1:5000/token");
+        let response = await fetch("http://127.0.0.1:5000/authorization");
         if (!response.ok) {
             alert("Error in fetching token!");
             return;
         }
         let parsed = await response.json();
-        if (parsed.token !== '') {
-          this.setState({token: parsed.token})
-          return parsed.token
-        }
+        this.setState({app_token: parsed.token})
+        spotifyApi.setAccessToken(parsed.token);
+    } catch (e) {
+        alert(e);
+    }
+
+    try {
+      let response = await fetch("http://127.0.0.1:5000/token");
+      if (!response.ok) {
+          alert("Error in fetching token!");
+          return;
+      }
+      let parsed = await response.json();
+      if (parsed.token !== '') {
+        this.setState({user_token: parsed.token})
+        spotifyApi.setAccessToken(parsed.token);
+      }
     } catch (e) {
         alert(e);
     }
   }
 
-  loginCallback = () => {
-    this.setState({token: ''})
+  logout = () => {
+    this.setState({user_token: ''})
+    spotifyApi.setAccessToken(this.state.app_token);
   }
 
   render() {
+    console.log(this.state.user_token)
     return (
         <div>
             <Switch>
-              <Route exact path='/' render={(props) => <HomePage {...props} token={this.state.token} loginCallback={this.loginCallback} />} />
+              <Route exact path='/' render={(props) => <HomePage {...props} user_token={this.state.user_token} logout={this.logout} />} />
               <Route path='/explore' render={(props) => <ExplorePage {...props} spotifyApi={spotifyApi} />} />
               <Route path='/quiz' render={(props) => <QuizPage {...props} />} />
               <Redirect to='/' />

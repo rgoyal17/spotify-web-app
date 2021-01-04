@@ -12,7 +12,7 @@ class HomePage extends React.Component {
     return (
         <div>
             <div>
-                <Navigation token={this.props.token} loginCallback={this.props.loginCallback} />
+                <Navigation user_token={this.props.user_token} logout={this.props.logout} />
             </div>
             <div>
                 <Description />
