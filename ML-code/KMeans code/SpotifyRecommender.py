@@ -29,10 +29,12 @@ from scipy.spatial import distance
 from sklearn.preprocessing import StandardScaler
 
 
+query_features = ['artists', 'acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'loudness',\
+            'speechiness', 'tempo', 'valence']
 class SpotifyRecommender:
     def __init__(self):
+        global query_features
         self.df_artists_songs = (pd.read_csv("ML-code/KMeans code/KMeans_data/cleaned_feature_data.csv"))
-        self.df = (self.df_artists_songs.drop(['artists'], axis=1)).to_numpy()
 
         # TODO: remove this after adjusting according to the specific API calls 
         self.data_full = (pd.read_csv("ML-code/KMeans code/KMeans_data/cleaned_data.csv"))
@@ -51,7 +53,7 @@ class SpotifyRecommender:
     def recommend(self, artist_name, spotifyQuery):
         recommend_list = []
         # Artist-based recommendation.
-        recommend_list.extend(self.__artist_rec(artist_name, spotifyQuery))
+        # recommend_list.extend(self.__artist_rec(artist_name, spotifyQuery))
         # Genre-based recommendation.
         recommend_list.extend(self.__genre_rec(artist_name))
         # Machine-learning algorithm based recommendation.
@@ -62,8 +64,7 @@ class SpotifyRecommender:
         ret = []
         for index in range(len(recommend_list)):
             i = (recommend_list[index])[0]
-            ret.append(self.data_full._get_value(i, "name") + " by " +\
-                       self.data_full._get_value(i, "artists"))
+            ret.append(i)
         return ret
 
     # TODO: Make /cleaned_artist.csv to get artist_attributes
@@ -71,7 +72,7 @@ class SpotifyRecommender:
         # Getting the artist's information.
         genres = ast.literal_eval((self.df_artists.loc[self.df_artists['artists'] == artist]).iloc[0][15])
         artist_data = (self.df_artists_attributes[self.df_artists_attributes['artists'] == artist]).to_numpy()
-        artist_attributes = artist_data[:, 1:9]
+        artist_attributes = artist_data[:, 1:10]
         # Getting similar artists based on common genres.
         common_artists = {}
         for genre in genres:
@@ -91,8 +92,7 @@ class SpotifyRecommender:
                 break
             df_common_artists.append(self.df_artists.loc[sorted_list[i]])
 
-        indexes = [x for x in range(0, df_common_artists.size)]
-        print(indexes)
+        indexes = [x for x in range(0, len(df_common_artists))]
         return self.__euclidean_min(df_common_artists, artist_attributes, \
                                     indexes, output_num=2)
             
@@ -100,7 +100,7 @@ class SpotifyRecommender:
     def __artist_rec(self, artist, spotifyQuery):
         df_artist_songs = (self.df_artists_songs.loc[self.df_artists_songs['artists'] == artist])
         return self.__euclidean_min(df_artist_songs, np.array(spotifyQuery),\
-                                    [x for x in range(0, df_artist_songs.size)], output_num=2)
+                                    [x for x in range(0, df_artist_songs.size)],  output_num=2)
 
     def __ML_rec(self, spotifyQuery):
         # standardizing the query song and getting its cluster label.
@@ -114,14 +114,15 @@ class SpotifyRecommender:
             if (labels[index] == cluster_label):
                 indexes.append(index)
         
-        return self.__euclidean_min(self.df, query_std, indexes)
+        return self.__euclidean_min(self.df_artists_songs, query_std, indexes)
 
     # Calculating normal euclidean distance between desired mutli-dimensional
     # points and returning only the closest desired number of points.
     def __euclidean_min(self, _df, data_point, indexes, output_num=5):
         distances = {}
+        _df = _df[query_features]
         for index in indexes:
-            point = tuple(self.scaler.transform([_df[index]]))
-            distances[index] = distance.euclidean(point, tuple(data_point))
+            artist = _df.iloc[index]['artists']
+            point = tuple(self.scaler.transform([np.array(_df.drop(['artists'], axis=1).iloc[index])]))
+            distances[artist] = distance.euclidean(point, tuple(data_point))
         return (sorted(distances.items(), key=lambda x: x[1]))[:output_num]
-
